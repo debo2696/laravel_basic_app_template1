@@ -1,0 +1,1 @@
+# laravel_basic_app_template1
