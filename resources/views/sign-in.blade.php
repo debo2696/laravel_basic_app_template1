@@ -13,7 +13,8 @@
 <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/style.min.css')}}">    
 </head>
-
+@if(session()->has('creds')===false) 
+<!-- If user not logged in-->
 <body class="theme-blush">
 
 <div class="authentication">
@@ -50,6 +51,16 @@
                             <button class="btn btn-primary btn-icon btn-icon-mini btn-round twitter"><i class="zmdi zmdi-twitter"></i></button>
                             <button class="btn btn-primary btn-icon btn-icon-mini btn-round google"><i class="zmdi zmdi-google-plus"></i></button>
                         </div>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach                        
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                 </form>
                 <div class="copyright text-center">
@@ -66,7 +77,9 @@
         </div>
     </div>
 </div>
-
+@else(session()->has->('creds')===true)
+    <script>window.location.href = "http://localhost:8000/list";</script>
+@endif
 <!-- Jquery Core Js -->
 <script src="{{asset('assets/bundles/libscripts.bundle.js')}}"></script>
 <script src="{{asset('assets/bundles/vendorscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js -->

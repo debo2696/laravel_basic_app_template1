@@ -13,9 +13,8 @@
 <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/style.min.css')}}">
 </head>
-
+@if(session()->has('creds')===false)
 <body class="theme-blush">
-
 <div class="authentication">    
     <div class="container">
         <div class="row">
@@ -54,6 +53,16 @@
                         <div class="signin_with mt-3">
                             <a class="link" href="{{route('login')}}">You already have a membership?</a>
                         </div>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach                        
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                 </form>
                 <div class="copyright text-center">
@@ -70,7 +79,9 @@
         </div>
     </div>
 </div>
-
+@else(session()->has->('creds')===true)
+    <script>window.location.href = "http://localhost:8000/list";</script>
+@endif
 
 <!-- Jquery Core Js -->
 <script src="{{asset('assets/bundles/libscripts.bundle.js')}}"></script>

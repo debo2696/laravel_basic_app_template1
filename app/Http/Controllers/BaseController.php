@@ -8,6 +8,8 @@ use Session; //Required for using Session class
 use Illuminate\Support\Facades\DB; //Required for using DB class
 use Illuminate\Pagination\Paginator; //Required for using Laravel's paginator
 use Illuminate\Support\Facades\Hash; //For using password hash
+use Symfony\Component\HttpFoundation\Cookie; //For attaching a new Cookie to a response
+use Illuminate\Http\Response; //Response for sending and accepting cookie
 
 class BaseController extends Controller
 {
@@ -64,6 +66,67 @@ class BaseController extends Controller
     }
     public function list(Request $req)
     {
-        return view('list');
+        $user = DB::table('users')->simplePaginate(2);
+        
+        Paginator::useBootstrap();
+        $value=$req->session()->get('creds');
+        //print_r($value);die();
+        $sesname=$value[0]['sin_username'];
+        return view('list',['user'=>$user],['usrname'=>$sesname]); //Dashboard page
+    }
+    public function logout(Request $req)
+    {
+        echo "Session Destroyed";
+        Session::flush();
+    }
+    
+    public function fetch(Request $req)
+    {
+        $cookieActiveTime = 1; //means 1 minute
+        $response = new Response();
+        //Call the withCookie() method with the response method
+        $response->withCookie(cookie('name', $req->mflg, $cookieActiveTime));
+        $response->withCookie(cookie('theme', $req->tflg, $cookieActiveTime));
+        //$response->withCookie(cookie()->forever('name', $val));    
+        return $response;
+    }
+    public function getCookie(Request $req) 
+    {
+        echo "This is cookie response page.";
+        $value = $req->cookie('name');
+        $value = $req->cookie('theme');
+        echo $value;
+    }
+    public function fileread()
+    {
+        echo "File read";
+        echo $_SERVER['DOCUMENT_ROOT'];
+        $mydir="random_files/";
+        $myfiles = scandir($mydir);  
+        //displaying the files in the directory
+        echo ($myfiles[3]);
+        $fpath="random_files/sm1.txt";
+        $myfile = fopen($fpath, "r") or die("Unable to open file!");
+        echo fread($myfile,filesize($fpath));
+        fclose($myfile);
+    }
+    public function sesCheck(Request $req)
+    {
+        print_r($req->session()->all());
+        //print_r (session()->get('nw'));
+        die();
+    }
+
+    public function getFlash()
+    {        
+        return view('basic-form-elements');
+    }
+    public function postFlash(Request $req)
+    {
+        $req->session()->put('nw',[$req->input()]);
+        $validated = $req->validate([
+            'tbox' => 'required|max:3'
+        ]);
+        echo $request->flash();
     }
 }
