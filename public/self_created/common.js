@@ -57,5 +57,52 @@ $(document).ready(function(){
            $('#emlList').fadeOut();  
        });*/  
    
-   });
+   
+
+   $("#delBtn").click(function(){
+        console.log("clicked!");
+        var id = $(this).data("id");
+        var token = $("meta[name='csrf-token']").attr("content");
+
+        $.ajax(
+        {
+            url: "del/"+id,
+            type: 'DELETE',
+            data: {
+                "id": id,
+                "_token": token,
+            },
+            success: function (){
+                console.log("it Works");
+            }
+        });
+    });
+});
+
+function edFcn(id)
+{
+    var edFcnVal=id;
+    window.location.href='http://localhost:8000/edit?id='+id;
+}
+
+function delFcn(id)
+{
+	myFunction(id);
+	function myFunction(val) {
+		let txt;
+		
+      	if (confirm("Delete this record?")) 
+		{
+        	txt = "You pressed OK!";
+        	window.location.href='http://localhost/webapps/crud_app1/delete_data.php?id='+val;	
+		} 
+		else 
+		{
+        	txt = "You pressed Cancel!";
+      	}
+      /*document.getElementById("demo").innerHTML = txt;*/
+    }
+}
+
+
    

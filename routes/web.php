@@ -32,4 +32,8 @@ Route::group(['middleware'=>['KernelCredData']], function()
     Route::get('list', [BaseController::class, 'list'])->name('list'); //Dashboard page route
     Route::get('/list/fetch', [BaseController::class, 'fetch'])->name('navstate');
     Route::get('tpage1', [BaseController::class, 'getCookie'])->name('vcookie');
+    Route::get('edit/{id}', [BaseController::class, 'getEdit'])->name('edit');
+    //Route::post('pedit?id={id}', [BaseController::class, 'postEdit'])->name('pedit');
+    Route::post('pedit/{id}', [BaseController::class, 'postEdit'])->name('pedit');
+    Route::delete('del/{id}', [BaseController::class, 'destroy'])->name('del');
 });

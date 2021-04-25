@@ -1,0 +1,3 @@
+<form class="f2" action="<?php echo URL::to('/');?>/pedit/<?php echo $id ?>" method="post">
+
+<td><button class="btn btn-primary" type="button" onclick="javascript:edFcn(<?php echo $u->id ?>);" name="ed_var">Edit</button></td>

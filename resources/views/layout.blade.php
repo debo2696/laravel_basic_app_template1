@@ -38,8 +38,8 @@
             @if(session()->has('creds'))
                 <div class="user-info">
                     <a class="image" href="profile.html"><img src="assets/images/profile_av.jpg" alt="User"></a>
-                    <div class="detail">                           
-                        <h4>{{$usrname}}</h4>
+                    <div class="detail">
+                        <h4><?php echo Session::get('creds')[0]['sin_username']; ?></h4>                           
                         <small>Super Admin</small>                        
                     </div>
                 </div>

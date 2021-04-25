@@ -129,4 +129,39 @@ class BaseController extends Controller
         ]);
         echo $request->flash();
     }
+    public function getEdit(Request $req, $id)
+    {
+        
+        return view('edit',['id'=>$id]);
+    }
+    public function postEdit(Request $req, $id)
+    {
+        /*$validated = $req->validate([
+            'sup_username' => 'required',
+            'sup_email' => 'required',
+            'sup_pass' => 'required'
+        ]);*/
+        //print_r($req->all());
+        DB::table('users')
+            ->where('id',$id)
+            ->update(['name' => $req->ed_name, 'email'=> $req->ed_email]);
+
+        //DB::update('update users set name = ? where id = ?',[$req->ed_name,$id]);
+        /*$user=new User;
+        $user->name=$req->sup_username;
+        $user->email=$req->sup_email;
+        $user->password=Hash::make($req->sup_pass);
+        $result=$user->save();*/
+        //echo"Submitted Successfully";
+    //    echo "<script>setTimeout(function(){ window.location.href = 'https://www.google.com'; }, 3000);</script>";
+        //sleep(3);
+        return redirect('list');
+    }
+    public function destroy($id){
+
+        User::find($id)->delete($id);    
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);    
+    }
 }

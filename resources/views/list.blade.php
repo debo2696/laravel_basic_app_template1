@@ -1,6 +1,9 @@
 @extends('layout')
 
 @section('MidContent')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+
 
 
 
@@ -9,6 +12,15 @@
             <div class="row">
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2>Ticket list</h2>
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input type="search" id="form1" class="form-control" />
+                            <label class="form-label" for="form1">Search</label>
+                        </div>
+                        <button type="button" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i>{{ config('app.name') }}</a></li>
                         <li class="breadcrumb-item active">List</li>
@@ -33,9 +45,11 @@
                                     <th>Id</th>
                                     <th>Username</th>
                                     <th>Created by</th>
-                                    <th>Date</th>
+                                    <th>Action1</th>
+                                    <th>Action2</th>
                                     <th>Agent</th>
                                     <th>Status</th>
+                                    
                                 </tr>
                             </thead>
                             @foreach($user as $u)                                 
@@ -45,91 +59,12 @@
                                     <td>{{$u->id}}</td>
                                     <td>{{$u->email}}</td>
                                     <td><a href="ticket-detail.html" title="">Update chart library</a></td>
-                                    <td>02 Jan 2019</td>
+                                    <td><a href="{{URL::to('edit/'.$u->id)}}" class="btn btn-warning">Edit</a></td>
+                                    <td><button class="btn btn-danger" id="delBtn" data-id="{{ $u->id }}" >Delete Record</button></td>                                    
                                     <td>Maryam</td>
                                     <td><span class="badge badge-warning">In Progress</span></td>
                                 </tr>
-                                <!--<tr>
-                                    <td><strong>A4578</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Update chart library</a></td>
-                                    <td>Alpino Bootstrap</td>
-                                    <td>Tim Hank</td>
-                                    <td>04 Jan 2019</td>
-                                    <td>Hossein</td>
-                                    <td><span class="badge badge-warning">In Progress</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A6523</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Mega Menu Open OnClick</a></td>
-                                    <td>Hexabit Admin</td>
-                                    <td>Gary Camara</td>
-                                    <td>09 Jan 2019</td>
-                                    <td>Maryam</td>
-                                    <td><span class="badge badge-info">Opened</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A9514</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Nexa Theme Side Menu Open OnClick</a></td>
-                                    <td>Nexa Template</td>
-                                    <td>Tim Hank</td>
-                                    <td>12 Jan 2019</td>
-                                    <td>Hossein</td>
-                                    <td><span class="badge badge-info">Opened</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A2548</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Update Angular version</a></td>
-                                    <td>Lucid Admin</td>
-                                    <td>Fidel Tonn</td>
-                                    <td>22 Jan 2019</td>
-                                    <td>Frank</td>
-                                    <td><span class="badge badge-danger">Closed</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A1346</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Add new hospital</a></td>
-                                    <td>Lucid Hospital</td>
-                                    <td>Fidel Tonn</td>
-                                    <td>13 Jan 2019</td>
-                                    <td>Hossein</td>
-                                    <td><span class="badge badge-danger">Closed</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A7845</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Update latest bootstrap version</a></td>
-                                    <td>Compass Dashboard</td>
-                                    <td>Tim Hank</td>
-                                    <td>07 Jan 2019</td>
-                                    <td>Frank</td>
-                                    <td><span class="badge badge-warning">In Progress</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A2586</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Add new extra page</a></td>
-                                    <td>Lucid Admin</td>
-                                    <td>Tim Hank</td>
-                                    <td>02 Jan 2019</td>
-                                    <td>Maryam</td>
-                                    <td><span class="badge badge-warning">In Progress</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A4578</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Update chart library</a></td>
-                                    <td>Alpino Bootstrap</td>
-                                    <td>Tim Hank</td>
-                                    <td>04 Jan 2019</td>
-                                    <td>Hossein</td>
-                                    <td><span class="badge badge-warning">In Progress</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>A6523</strong></td>
-                                    <td><a href="ticket-detail.html" title="">Mega Menu Open OnClick</a></td>
-                                    <td>Hexabit Admin</td>
-                                    <td>Gary Camara</td>
-                                    <td>09 Jan 2019</td>
-                                    <td>Maryam</td>
-                                    <td><span class="badge badge-info">Opened</span></td>
-                                </tr>-->
+                                
                             </tbody>
                             @endforeach
                         </table>
@@ -138,13 +73,7 @@
                     <ul class="pagination pagination-primary mt-4">
                         <li>{{$user->links()}}</li>
                     </ul>
-                    <!--<ul class="pagination pagination-primary mt-4">
-                        <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
-                    </ul>-->
+                    
                 </div>
             </div>
         </div>
