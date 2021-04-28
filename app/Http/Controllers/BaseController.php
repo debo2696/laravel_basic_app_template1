@@ -28,8 +28,8 @@ class BaseController extends Controller
         //print_r($req->all());die();
     
         $validated = $req->validate([
-            'sup_username' => 'required',
-            'sup_email' => 'required',
+            'sup_username' => 'required||unique:users',
+            'sup_email' => 'required|email:rfc,dns',
             'sup_pass' => 'required'
         ]);
         $user=new User;
@@ -66,6 +66,7 @@ class BaseController extends Controller
     }
     public function list(Request $req)
     {
+        Session::forget('paginate_status'); //so that pagination does not show up while doing Order by
         $user = DB::table('users')->simplePaginate(2);
         
         Paginator::useBootstrap();
@@ -157,11 +158,30 @@ class BaseController extends Controller
         //sleep(3);
         return redirect('list');
     }
-    public function destroy($id){
-
+    public function destroy($id)
+    {
         User::find($id)->delete($id);    
         return response()->json([
             'success' => 'Record deleted successfully!'
         ]);    
     }
+    public function autoc_list(Request $req)
+    {
+        Session::forget('paginate_status');//so that pagination does not show up while doing Order by
+        if (isset($req->auto_box) && ($req->auto_box != ''))
+        {
+            $user = DB::table('users')
+            ->where('email', 'LIKE', "%{$req->auto_box}%")
+            ->simplePaginate(2);
+        }
+        else if($req->custId == "date")
+        {
+            $user = DB::table('users')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            $req->session()->put('paginate_status', [$req->input()]);;
+        }
+        return view('list',['user'=>$user]);   
+    }
+
 }

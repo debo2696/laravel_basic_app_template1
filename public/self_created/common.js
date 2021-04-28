@@ -77,6 +77,14 @@ $(document).ready(function(){
             }
         });
     });
+
+    /*$( function() {
+      var availableTags = autoList;
+      $( "#form1" ).autocomplete({
+        source: availableTags
+      });
+    } );*/ //jquery autocomplete
+    
 });
 
 function edFcn(id)
@@ -103,6 +111,8 @@ function delFcn(id)
       /*document.getElementById("demo").innerHTML = txt;*/
     }
 }
+
+
 
 
    

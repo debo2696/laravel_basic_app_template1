@@ -43,9 +43,9 @@
                         <small>Super Admin</small>                        
                     </div>
                 </div>
-                @endif
+            @endif
             </li>
-            <li class="active open"><a href="index.html"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+            <li class="active open"><a href="{{route('list')}}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
             <li><a href="my-profile.html"><i class="zmdi zmdi-account"></i><span>Our Profile</span></a></li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>App</span></a>
                 <ul class="ml-menu">
@@ -421,7 +421,7 @@
         <li><a href="javascript:void(0);" class="app_google_drive" title="Google Drive"><i class="zmdi zmdi-google-drive"></i></a></li>
         <li><a href="javascript:void(0);" class="app_group_work" title="Group Work"><i class="zmdi zmdi-group-work"></i></a></li>
         <li><a href="javascript:void(0);" class="js-right-sidebar" title="Setting"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
-        <li><a href="sign-in.html" class="mega-menu" title="Sign Out"><i class="zmdi zmdi-power"></i></a></li>
+        <li><a href="{{route('out')}}" class="mega-menu" title="Sign Out"><i class="zmdi zmdi-power"></i></a></li>
     </ul>
 </div>
 

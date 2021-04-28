@@ -36,4 +36,5 @@ Route::group(['middleware'=>['KernelCredData']], function()
     //Route::post('pedit?id={id}', [BaseController::class, 'postEdit'])->name('pedit');
     Route::post('pedit/{id}', [BaseController::class, 'postEdit'])->name('pedit');
     Route::delete('del/{id}', [BaseController::class, 'destroy'])->name('del');
+    Route::post('list', [BaseController::class, 'autoc_list'])->name('autolist'); //For searching
 });

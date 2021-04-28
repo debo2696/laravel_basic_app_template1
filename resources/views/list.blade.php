@@ -12,24 +12,23 @@
             <div class="row">
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2>Ticket list</h2>
-                    <div class="input-group">
-                        <div class="form-outline">
-                            <input type="search" id="form1" class="form-control" />
-                            <label class="form-label" for="form1">Search</label>
-                        </div>
-                        <button type="button" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i>{{ config('app.name') }}</a></li>
                         <li class="breadcrumb-item active">List</li>
                     </ul>
-                    <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+                    
                 </div>
-                <div class="col-lg-5 col-md-6 col-sm-12">                
-                    <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
-                    <button class="btn btn-success btn-icon float-right" type="button"><i class="zmdi zmdi-plus"></i></button>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <div class="input-group">
+                        <form action="{{route('list')}}" method="post">
+                        @csrf
+                            <div class="form-outline">
+                                <label class="form-label" for="form1">Search</label>
+                                <input type="search" id="form1" name="auto_box" class="form-control float-right" />
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-icon float-right right_icon_toggle_btn">                
+                        </form>                        
+                    <a href="{{route('inp')}}"><button class="btn btn-success btn-icon float-right" type="button"><i class="zmdi zmdi-plus"></i></button></a>
                 </div>
             </div>
         </div>
@@ -43,13 +42,16 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Id</th>
-                                    <th>Username</th>
+                                    <form action="{{route('list')}}" method="post">
+                                    @csrf
+                                        <input type="hidden" id="custId" name="custId" value="date">
+                                        <th>Username<button class="btn btn-danger" id="delBtn">F</button></th>                       
+                                    </form>
                                     <th>Created by</th>
                                     <th>Action1</th>
                                     <th>Action2</th>
                                     <th>Agent</th>
-                                    <th>Status</th>
-                                    
+                                    <th>Status</th>                                    
                                 </tr>
                             </thead>
                             @foreach($user as $u)                                 
@@ -68,16 +70,23 @@
                             </tbody>
                             @endforeach
                         </table>
-
+                    @if(!Session::has('paginate_status'))
                     </div>
                     <ul class="pagination pagination-primary mt-4">
                         <li>{{$user->links()}}</li>
                     </ul>
-                    
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+@endsection
+
+@section('AdditionalJS')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 @endsection
